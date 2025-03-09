@@ -1,0 +1,31 @@
+#
+# CPU Sequential
+#
+[Sequential]
+How_To_Compile: g++ -o bin/kmeans_cpu src/kmeans.cpp src/kmeans_cpu.cpp -I src/
+Executable: bin/kmeans_cpu
+Extra_Args:
+
+#
+# CUDA Basic
+#
+[CUDA basic]
+How_To_Compile: nvcc -o bin/kmeans_cuda src/kmeans.cpp src/kmeans_kernel.cu src/kmeans_thrust.cu src/kmeans_cpu.cpp -I src/ -lcudart -DUSE_CUDA
+Executable: bin/kmeans_cuda
+Extra_Args: -cuda
+
+#
+# CUDA Shmem
+#
+[CUDA shared]
+How_To_Compile: nvcc -arch=sm_60 -o bin/kmeans_shmem src/kmeans.cpp src/kmeans_kernel.cu src/kmeans_thrust.cu src/kmeans_cpu.cpp -I src/ -lcudart -DUSE_CUDA
+Executable: bin/kmeans_shmem
+Extra_Args: -cuda -shmem
+
+#
+# Thrust Parallel
+#
+[Thrust]
+How_To_Compile: nvcc -arch=sm_60 -o bin/kmeans_thrust src/kmeans.cpp src/kmeans_thrust.cu src/kmeans_kernel.cu src/kmeans_cpu.cpp -I src/ -lcudart -DUSE_CUDA
+Executable: bin/kmeans_thrust
+Extra_Args: -cuda -thrust

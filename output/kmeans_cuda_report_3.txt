@@ -1,0 +1,46 @@
+nsys nvprof ./bin/kmeans_cuda -k 16 -d 32 -i input/random-n65536-d32-c16.txt -m 150 -t 1e-5 -s 8675309 -cuda -c
+
+CUDA API Statistics:
+
+ Time(%)  Total Time (ns)  Num Calls    Average    Minimum    Maximum            Name         
+ -------  ---------------  ---------  -----------  -------  -----------  ---------------------
+    99.6    4,395,914,516        450  9,768,698.9    2,188  258,428,539  cudaDeviceSynchronize
+     0.2        9,348,491        304     30,751.6   10,321    3,574,437  cudaMemcpy           
+     0.1        6,171,678        450     13,714.8    5,554       64,110  cudaLaunchKernel     
+     0.0        1,150,748        150      7,671.7    3,624       18,607  cudaMemset           
+     0.0          684,731          4    171,182.8    4,974      459,849  cudaFree             
+     0.0          350,414          4     87,603.5    3,622      266,386  cudaMalloc           
+     0.0           14,495          2      7,247.5    5,768        8,727  cudaEventRecord      
+     0.0           13,343          2      6,671.5    1,196       12,147  cudaEventCreate      
+     0.0            6,550          2      3,275.0      742        5,808  cudaEventDestroy     
+     0.0            3,295          1      3,295.0    3,295        3,295  cudaEventSynchronize 
+
+
+
+CUDA Kernel Statistics:
+
+ Time(%)  Total Time (ns)  Instances    Average      Minimum      Maximum                                        Name                                     
+ -------  ---------------  ---------  ------------  ----------  -----------  -----------------------------------------------------------------------------
+    94.6    4,157,807,396        150  27,718,716.0  18,960,749  258,412,087  updateCentroidsBasic(double const*, double*, int const*, int*, int, int, int)
+     5.4      235,989,557        150   1,573,263.7   1,494,937    2,977,715  assignPointsToCentroidsBasic(double const*, double*, int*, int, int, int)    
+     0.0          332,316        150       2,215.4       2,176        2,336  normalizeCentroids(double*, int const*, int, int)                            
+
+
+
+CUDA Memory Operation Statistics (by time):
+
+ Time(%)  Total Time (ns)  Operations    Average    Minimum   Maximum       Operation     
+ -------  ---------------  ----------  -----------  -------  ---------  ------------------
+    87.7        3,470,897           2  1,735,448.5    1,344  3,469,553  [CUDA memcpy HtoD]
+     9.4          370,531         302      1,226.9      992     40,256  [CUDA memcpy DtoH]
+     2.9          114,496         150        763.3      736      1,088  [CUDA memset]     
+
+
+
+CUDA Memory Operation Statistics (by size in KiB):
+
+   Total     Operations   Average   Minimum   Maximum        Operation     
+ ----------  ----------  ---------  -------  ----------  ------------------
+      9.375         150      0.063    0.063       0.063  [CUDA memset]     
+ 16,388.250           2  8,194.125    4.000  16,384.250  [CUDA memcpy HtoD]
+  1,460.004         302      4.834    4.000     256.004  [CUDA memcpy DtoH]

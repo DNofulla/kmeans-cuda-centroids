@@ -1,0 +1,49 @@
+nsys nvprof ./bin/kmeans_thrust -k 16 -d 24 -i input/random-n16384-d24-c16.txt -m 150 -t 1e-5 -s 8675309 -cuda -thrust -c
+
+CUDA API Statistics:
+
+ Time(%)  Total Time (ns)  Num Calls   Average   Minimum   Maximum           Name         
+ -------  ---------------  ---------  ---------  -------  ---------  ---------------------
+    97.5      356,138,554        904  393,958.6    1,715  4,197,736  cudaDeviceSynchronize
+     1.6        5,672,223        904    6,274.6    4,605     42,027  cudaLaunchKernel     
+     0.7        2,555,537        152   16,812.7    9,882    664,193  cudaMemcpyAsync      
+     0.1          419,485        152    2,759.8    1,205    168,071  cudaStreamSynchronize
+     0.1          342,298          5   68,459.6    2,916    198,122  cudaMalloc           
+     0.1          300,178          5   60,035.6    3,464    185,882  cudaFree             
+     0.0            9,838          2    4,919.0    4,277      5,561  cudaEventRecord      
+     0.0            8,193          2    4,096.5    1,043      7,150  cudaEventDestroy     
+     0.0            3,694          2    1,847.0      732      2,962  cudaEventCreate      
+     0.0            2,693          1    2,693.0    2,693      2,693  cudaEventSynchronize 
+
+
+
+CUDA Kernel Statistics:
+
+ Time(%)  Total Time (ns)  Instances    Average     Minimum    Maximum                                                   Name                                                
+ -------  ---------------  ---------  -----------  ---------  ---------  ----------------------------------------------------------------------------------------------------
+    88.3      313,375,311        150  2,089,168.7  1,408,380  4,195,635  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+    11.4       40,358,526        150    269,056.8    204,607    324,159  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+     0.1          482,595        150      3,217.3      2,463      3,936  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+     0.1          240,095        150      1,600.6      1,216      1,952  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+     0.0          177,087        150      1,180.6        896      1,440  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+     0.0          168,800        150      1,125.3        832      1,376  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+     0.0            3,424          2      1,712.0      1,632      1,792  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+     0.0            3,168          2      1,584.0      1,408      1,760  void thrust::cuda_cub::core::_kernel_agent<thrust::cuda_cub::__parallel_for::ParallelForAgent<thrus…
+
+
+
+CUDA Memory Operation Statistics (by time):
+
+ Time(%)  Total Time (ns)  Operations   Average   Minimum  Maximum      Operation     
+ -------  ---------------  ----------  ---------  -------  -------  ------------------
+    76.7          583,550           2  291,775.0    1,184  582,366  [CUDA memcpy HtoD]
+    23.3          177,376         150    1,182.5      960    1,536  [CUDA memcpy DtoH]
+
+
+
+CUDA Memory Operation Statistics (by size in KiB):
+
+   Total    Operations   Average   Minimum   Maximum       Operation     
+ ---------  ----------  ---------  -------  ---------  ------------------
+   450.000         150      3.000    3.000      3.000  [CUDA memcpy DtoH]
+ 3,075.188           2  1,537.594    3.000  3,072.188  [CUDA memcpy HtoD]

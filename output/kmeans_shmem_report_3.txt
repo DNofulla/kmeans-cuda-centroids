@@ -1,0 +1,46 @@
+nsys nvprof ./bin/kmeans_shmem -k 16 -d 32 -i input/random-n65536-d32-c16.txt -m 150 -t 1e-5 -s 8675309 -cuda -shmem -c
+
+CUDA API Statistics:
+
+ Time(%)  Total Time (ns)  Num Calls    Average    Minimum   Maximum           Name         
+ -------  ---------------  ---------  -----------  -------  ---------  ---------------------
+    98.2      765,251,413        450  1,700,558.7    1,977  5,591,997  cudaDeviceSynchronize
+     1.0        8,091,263        304     26,616.0   10,301  3,526,527  cudaMemcpy           
+     0.5        3,915,192        450      8,700.4    4,806     33,973  cudaLaunchKernel     
+     0.1          701,807        150      4,678.7    2,947     13,861  cudaMemset           
+     0.1          668,286          4    167,071.5    4,613    458,138  cudaFree             
+     0.0          327,901          4     81,975.3    4,008    233,038  cudaMalloc           
+     0.0           15,325          2      7,662.5    6,118      9,207  cudaEventRecord      
+     0.0           12,870          2      6,435.0    1,040     11,830  cudaEventCreate      
+     0.0            5,251          2      2,625.5      656      4,595  cudaEventDestroy     
+     0.0            2,825          1      2,825.0    2,825      2,825  cudaEventSynchronize 
+
+
+
+CUDA Kernel Statistics:
+
+ Time(%)  Total Time (ns)  Instances    Average     Minimum    Maximum                                       Name                                     
+ -------  ---------------  ---------  -----------  ---------  ---------  -----------------------------------------------------------------------------
+    69.4      530,299,767        150  3,535,331.8  3,140,052  5,596,681  updateCentroidsShmem(double const*, double*, int const*, int*, int, int, int)
+    30.6      233,528,716        150  1,556,858.1  1,467,675  2,076,152  assignPointsToCentroidsShmem(double const*, double*, int*, int, int, int)    
+     0.0          333,629        150      2,224.2      1,984      3,424  normalizeCentroids(double*, int const*, int, int)                            
+
+
+
+CUDA Memory Operation Statistics (by time):
+
+ Time(%)  Total Time (ns)  Operations    Average    Minimum   Maximum       Operation     
+ -------  ---------------  ----------  -----------  -------  ---------  ------------------
+    86.9        3,430,738           2  1,715,369.0    1,344  3,429,394  [CUDA memcpy HtoD]
+    10.1          397,247         302      1,315.4      992     39,264  [CUDA memcpy DtoH]
+     3.0          119,518         150        796.8      735      1,376  [CUDA memset]     
+
+
+
+CUDA Memory Operation Statistics (by size in KiB):
+
+   Total     Operations   Average   Minimum   Maximum        Operation     
+ ----------  ----------  ---------  -------  ----------  ------------------
+      9.375         150      0.063    0.063       0.063  [CUDA memset]     
+ 16,388.250           2  8,194.125    4.000  16,384.250  [CUDA memcpy HtoD]
+  1,460.004         302      4.834    4.000     256.004  [CUDA memcpy DtoH]
